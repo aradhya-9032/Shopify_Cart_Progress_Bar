@@ -204,21 +204,22 @@ padding:16px;
 .cpb__milestones{
 
 gap:12px;
+margin-top:-42px;
 
 }
 
 .cpb__circle{
 
-width:58px;
+width:30px;
 
-height:58px;
+height:30px;
 
 }
 
 .cpb__circle img{
 
-width:28px;
-  height:28px;
+  width:18px;
+  height:18px;
   object-fit:contain;
 
 }
@@ -245,11 +246,11 @@ font-size:14px;
 
 @media screen and (max-width:480px){
 
-.cpb__milestones{
+/* .cpb__milestones{
 
 flex-direction:column;
 
-}
+} */
 
 .cpb__milestone{
 
@@ -259,7 +260,8 @@ align-items:center;
 
 text-align:left;
 
-gap:14px;
+/* gap:14px; */
+flex-direction:column;
 
 }
 

@@ -89,7 +89,9 @@
         >
           <div id="CartDrawer-CartItems" class="drawer__contents js-contents">
             {%- if cart != empty -%}
-             {% render 'cart-progress-bar' %}
+             <div class="mobile-only">
+                {% render 'cart-progress-bar' %}
+             </div>
               <div class="drawer__cart-items-wrapper">
                 <table class="cart-items" role="table">
                   <thead role="rowgroup">
