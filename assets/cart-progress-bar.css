@@ -1,0 +1,280 @@
+/* ==========================================================
+Cart Progress Bar
+Production Ready
+========================================================== */
+
+.cpb{
+  background:#fff;
+  border:1px solid #ececec;
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:20px;
+
+  --progress-color:#123B5D;
+  --progress-bg:#E6EEF5;
+  --active-color:#E5B529;
+  --inactive-color:#d9d9d9;
+}
+
+.cpb__header{
+  text-align:center;
+}
+
+.cpb__delivery{
+  font-size:13px;
+  margin:0;
+  color:#666;
+}
+
+.cpb__heading{
+  margin-top:10px;
+  margin-bottom:18px;
+  font-size:16px;
+  font-weight:600;
+  line-height:1.5;
+}
+.cpb__title{
+  font-size:13px;
+  font-weight:600;
+  margin:12px 0 4px;
+}
+
+.cpb__description{
+  font-size:12px;
+  color:#666;
+}
+
+.cpb__heading strong{
+  color:var(--active-color);
+}
+
+.cpb__progress{
+ position:relative;
+  width:100%;
+  height:6px;
+  background:#E8EEF4;
+  border-radius:30px;
+  overflow:hidden;
+  margin:35px 0 25px;
+
+}
+
+.cpb__progress-fill{
+
+ position:absolute;
+  left:0;
+  top:0;
+  height:100%;
+  width:0;
+  background:#123B5D;
+  border-radius:30px;
+  transition:width .4s ease;
+
+}
+
+.cpb__milestones{
+ display:flex;
+  justify-content:space-between;
+  position:relative;
+  margin-top:-48px;
+
+}
+
+.cpb__milestone{
+ width:33.33%;
+  text-align:center;
+  position:relative;
+
+}
+
+.cpb__circle{
+  width:30px;
+  height:30px;
+  margin: 5px auto;
+  background:#fff;
+  border:2px solid #D9D9D9;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  transition:.3s;
+
+}
+
+.cpb__circle img{
+
+  width:18px;
+
+  height:18px;
+
+  object-fit:contain;
+
+}
+
+.cpb__milestone h5{
+
+  margin-top:12px;
+
+  margin-bottom:6px;
+
+  font-size:14px;
+
+}
+
+.cpb__milestone p{
+
+  margin:0;
+
+  color:#777;
+
+  font-size:13px;
+
+  line-height:1.4;
+
+}
+
+.is-active .cpb__circle{
+border:2px solid #E5B529;
+  background:#fff;
+  box-shadow:none;
+  transform:none;
+
+}
+
+.is-active h5{
+
+  color:#222;
+
+}
+
+.is-active p{
+
+  color:#444;
+
+}
+
+.cpb__reward-name{
+  color:#E5B529;
+  font-weight:700;
+}
+
+.cpb__price{
+  display:none;
+}
+
+/* .cpb__milestone:hover{
+
+  transform:translateY(-6px);
+
+} */
+
+.cpb__circle svg{
+
+  width:30px;
+
+  height:30px;
+
+  color:#777;
+
+}
+
+.is-active .cpb__circle svg{
+
+  color:var(--active-color);
+
+}
+
+.cpb__completed-icon{
+  width:24px;
+  height:24px;
+  object-fit:contain;
+  vertical-align:middle;
+  margin-right:8px;
+}
+
+@media screen and (max-width:749px){
+
+.cpb{
+
+padding:16px;
+
+}
+
+.cpb__milestones{
+
+gap:12px;
+
+}
+
+.cpb__circle{
+
+width:58px;
+
+height:58px;
+
+}
+
+.cpb__circle img{
+
+width:28px;
+  height:28px;
+  object-fit:contain;
+
+}
+
+.cpb__milestone h5{
+
+font-size:12px;
+
+}
+
+.cpb__milestone p{
+
+font-size:11px;
+
+}
+
+.cpb__heading{
+
+font-size:14px;
+
+}
+
+}
+
+@media screen and (max-width:480px){
+
+.cpb__milestones{
+
+flex-direction:column;
+
+}
+
+.cpb__milestone{
+
+display:flex;
+
+align-items:center;
+
+text-align:left;
+
+gap:14px;
+
+}
+
+.cpb__circle{
+
+margin:0;
+
+flex-shrink:0;
+
+}
+
+.cpb__content{
+
+flex:1;
+
+}
+
+}

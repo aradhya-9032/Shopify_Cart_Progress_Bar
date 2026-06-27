@@ -1,0 +1,196 @@
+{% comment %}
+------------------------------------------------------------------------------
+Cart Progress Bar
+------------------------------------------------------------------------------
+{% endcomment %}
+
+{% if settings.enable_cart_progress
+  and settings.reward1_icon != blank
+  and settings.reward2_icon != blank
+  and settings.reward3_icon != blank %}
+
+  {% assign cart_total = cart.total_price | divided_by: 100 %}
+
+  {% capture rewards %}
+    {{ settings.reward1_price }}|{{ settings.reward1_title }}|{{ settings.reward1_desc }}|{{ settings.reward1_icon }},
+    {{ settings.reward2_price }}|{{ settings.reward2_title }}|{{ settings.reward2_desc }}|{{ settings.reward2_icon }},
+    {{ settings.reward3_price }}|{{ settings.reward3_title }}|{{ settings.reward3_desc }}|{{ settings.reward3_icon }}
+  {% endcapture %}
+
+  {% assign reward_list = rewards | split: ',' %}
+  {% assign last_reward = settings.reward3_price %}
+
+  {% if last_reward > 0 %}
+    {% assign progress = cart_total | times: 100 | divided_by: last_reward %}
+  {% else %}
+    {% assign progress = 0 %}
+  {% endif %}
+
+  {% if progress > 100 %}
+    {% assign progress = 100 %}
+  {% endif %}
+
+  {% assign remaining = 0 %}
+  {% assign next_reward = '' %}
+
+  {% if cart_total < settings.reward1_price %}
+
+    {% assign remaining = settings.reward1_price | minus: cart_total %}
+    {% assign next_reward = settings.reward1_desc %}
+
+  {% elsif cart_total < settings.reward2_price %}
+
+    {% assign remaining = settings.reward2_price | minus: cart_total %}
+    {% assign next_reward = settings.reward2_desc %}
+
+  {% elsif cart_total < settings.reward3_price %}
+
+    {% assign remaining = settings.reward3_price | minus: cart_total %}
+    {% assign next_reward = settings.reward3_desc %}
+
+  {% endif %}
+
+  {% assign remaining_money = remaining | times: 100 | money %}
+
+<div
+  class="cpb"
+  role="region"
+  aria-label="Cart Progress"
+  style="
+    --progress-color: {{ settings.progress_color }};
+    --progress-bg: {{ settings.progress_bg }};
+    --active-color: {{ settings.active_color }};
+    --inactive-color: {{ settings.inactive_color }};
+  "
+>
+
+  <div class="cpb__header">
+
+    <p class="cpb__delivery">
+      {{ settings.delivery_text }}
+    </p>
+
+    {% if remaining > 0 %}
+
+      <h4 class="cpb__heading" aria-live="polite">
+        {{ settings.reward_heading | replace: '[amount]', remaining_money }}<br>
+        <span class="cpb__reward-name">
+          {{ next_reward }}
+        </span>
+      </h4>
+
+    {% else %}
+
+      <h4 class="cpb__heading" aria-live="polite">
+
+        {% if settings.completed_icon != blank %}
+          <img
+            src="{{ settings.completed_icon | image_url: width: 40 }}"
+            alt="Completed Reward"
+            width="24"
+            height="24"
+            loading="lazy"
+            decoding="async"
+            class="cpb__completed-icon"
+          >
+        {% endif %}
+
+        <span class="cpb__reward-name">{{ settings.completed_text }}</span>
+
+      </h4>
+
+    {% endif %}
+
+  </div>
+
+  <div
+    class="cpb__progress"
+    role="progressbar"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="{{ progress }}"
+  >
+
+    <div
+      class="cpb__progress-fill"
+      style="width: {{ progress }}%;"
+    >
+    
+    </div>
+
+  </div>
+
+  <div
+    class="cpb__milestones"
+    role="list"
+  >
+      {% for reward in reward_list %}
+
+      {% assign item = reward | strip | split: '|' %}
+
+      {% assign reward_price = item[0] | plus: 0 %}
+      {% assign reward_title = item[1] %}
+      {% assign reward_desc = item[2] %}
+
+      {% case forloop.index %}
+        {% when 1 %}
+          {% assign reward_icon = settings.reward1_icon %}
+        {% when 2 %}
+          {% assign reward_icon = settings.reward2_icon %}
+        {% when 3 %}
+          {% assign reward_icon = settings.reward3_icon %}
+      {% endcase %}
+
+      {% assign completed = false %}
+
+      {% if cart_total >= reward_price %}
+        {% assign completed = true %}
+      {% endif %}
+
+      <div
+        class="cpb__milestone {% if completed %}is-active{% endif %}"
+        role="listitem"
+        aria-label="{{ reward_title }}"
+      >
+
+        <div class="cpb__circle {% if completed %}is-completed{% endif %}">
+
+          {% if reward_icon != blank %}
+
+            <img
+              src="{{ reward_icon | image_url: width: 80 }}"
+              alt="{{ reward_title }}"
+              width="32"
+              height="32"
+              loading="lazy"
+              decoding="async"
+            >
+          {% endif %}
+
+        </div>
+
+        <div class="cpb__content">
+
+          <h5 class="cpb__title">
+            {{ reward_title }}
+          </h5>
+
+          <p class="cpb__description">
+            {{ reward_desc }}
+          </p>
+
+          <small class="cpb__price">
+            {{ reward_price | times: 100 | money }}
+          </small>
+
+        </div>
+
+      </div>
+
+    {% endfor %}
+
+  </div>
+
+</div>
+
+{% endif %}
